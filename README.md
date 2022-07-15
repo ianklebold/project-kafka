@@ -56,7 +56,34 @@ sh bin/kafka-topics.sh --describe --topic ian-topic --bootstrap-server localhost
 
 ```
 
+### Modificando configuracion de TOPIC
+
+
+```
+Si queremos aumentar la cantidad de particiones
+
+sh bin/kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic ian-topic --partitions 40
+
+DATO : Podemos modificar aumentando la cantidad de particiones pero nunca reduciendolo
+
+```
 ![image](https://user-images.githubusercontent.com/56406481/179131815-9478060e-8469-42ec-98fd-e2dbb92cecbc.png)
+
+![image](https://user-images.githubusercontent.com/56406481/179137363-7c97c876-49a8-4eb8-bece-9108a4173ec2.png)
+
+
+
+### Eliminando TOPIC
+
+
+```
+sh bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic ian-topic
+
+```
+
+![image](https://user-images.githubusercontent.com/56406481/179141963-2f901425-03dc-49d2-ad60-17a67f42339b.png)
+
+
 
 Con esto es posible conocer cuantas particiones y replicas tenia mi topic
 
@@ -134,6 +161,16 @@ sh bin/kafka-console-consumer.sh --topic ian-topic --from-beginning --bootstrap-
 ```
 ![image](https://user-images.githubusercontent.com/56406481/179136433-2c2af055-868d-4504-abd9-371522dd9918.png)
 
+
+
+## Grupo de consumidores
+
+Cada uno de los consumidores pertenece a un grupo. Un consumer group puede tener uno o mas de un consumidor. Un consumidor puede leer más de una particion, pero una particion solo puede ser leida por un consumidor de un mismo grupo, es decir, pueden haber mas de un consumidor que lea de una particion pero estos tienen que ser de grupos distintos.
+
+![image](https://user-images.githubusercontent.com/56406481/179142682-d75feaee-fb5c-45bc-a7fe-4577d0c48dc3.png)
+
+
+Puede darse el caso en tener más consumidores que particiones, en este caso puede ocurrir que hayan consumidores osciosos, es decir, que no leen nada. 
 
 
 
