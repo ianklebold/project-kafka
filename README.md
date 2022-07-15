@@ -49,6 +49,16 @@ sh bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 ```
 ![image](https://user-images.githubusercontent.com/56406481/179129991-c0ae3d0d-6dd1-4677-a81f-20dabbbdc7d3.png)
 
+### Para acceder al detalle del TOPIC
+
+```
+sh bin/kafka-topics.sh --describe --topic ian-topic --bootstrap-server localhost:9092
+
+```
+
+![image](https://user-images.githubusercontent.com/56406481/179131815-9478060e-8469-42ec-98fd-e2dbb92cecbc.png)
+
+Con esto es posible conocer cuantas particiones y replicas tenia mi topic
 
 ## Particiones y replicas
 
@@ -64,11 +74,49 @@ Como vemos aquí tenemos un cluster de tres brokers, lo que nos posibilita a ten
 Se dice que si una replica se encuentra totalmente actualizada, se encuentra en un estado "in-sync", si por alguna razón un lider se cae, deja de estar actualizado, otra replica seguidora podría tomar su lugar de lider. 
 
 
+## Mensajes
+
+Un mensaje es una unidad de datos en kafka, compuesto por una llave y valor. Un mensaje es generador por un productor y recibido por un consumidor.
+
+![image](https://user-images.githubusercontent.com/56406481/179132069-23c16c2a-3d07-4850-a057-971c77184316.png)
 
 
+## Productor
+
+Publica mensajes en uno o mas TOPICS y es el que indica en que particion colocar ese mensaje
+
+### Creando un PRODUCTOR
+
+```
+sh bin/kafka-console-producer.sh --topic ian-topic --bootstrap-server localhost:9092
+```
+![image](https://user-images.githubusercontent.com/56406481/179134892-12a23bb9-a8a5-4da8-9a3d-71d14ad21eee.png)
+
+Como vemos nos permite escribir un mensaje. 
 
 
+## Consumidor
 
+Lee mensajes de uno o más TOPICS y los procesa. El consumidor siempre tendrá una posicion, la posicion es el ultimo mensaje que leyó el consuimdor.
+La diferencia entre la posicion del consumidor y el mensaje más nuevo que ingresó en la partición se conoce como offset lag. El offset lag es muy importante porque es una medida que me indica que tan rapido está procesando los mensajes el consumidor. Aquel periodo de tiempo que se mantienen los mensajes sin leer se llama rentention period.
+
+En Kafka los mensajes se almacenan por un periodo de tiempo, si este periodo es igual al offset lag estamos ante un gran problema. 
+
+### Creando un CONSUMIDOR
+
+```
+sh bin/kafka-console-consumer.sh --topic ian-topic --bootstrap-server localhost:9092
+```
+
+![image](https://user-images.githubusercontent.com/56406481/179135067-9f540c9b-740c-4fdf-90f4-6db087913ef1.png)
+
+El consumidor queda esperando mensajes del productor. 
+
+![image](https://user-images.githubusercontent.com/56406481/179135270-bbb3ad2e-f740-4342-89a4-e0daf186b8a9.png)
+
+Hasta que el productor genera el mensaje y le llega al consumidor
+
+### Configuracion en CONSOLE CONSUMER
 
 
 
