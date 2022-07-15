@@ -35,6 +35,8 @@ sh bin/kafka-topics.sh --bootstrap-server localhost:9092 --create topic ian-topi
 Con : "sh bin/kafka-topics.sh --bootstrap-server localhost:9092" Decimos que queremos crear un topic en el 9092 justo donde tenemos el broker de kafka
 Con : "--create topic ian-topic -partitions 5 --replication-factor 1" Decimos que queremos crear un topic de 5 particiones un 1 replicacion
 
+Si yo quisiera 3 replicaciones, no voy a poder porque solo tengo un broker, si quiero 3 replicaciones minimo necesito 3 brokers en mi cluster
+
 ```
 ![image](https://user-images.githubusercontent.com/56406481/179129735-c2ed376e-e42e-4884-816d-e09422f32f9c.png)
 
@@ -46,3 +48,37 @@ sh bin/kafka-topics.sh --list --bootstrap-server localhost:9092
 
 ```
 ![image](https://user-images.githubusercontent.com/56406481/179129991-c0ae3d0d-6dd1-4677-a81f-20dabbbdc7d3.png)
+
+
+## Particiones y replicas
+
+Multiple particiones permite tener consumidore de mensajes trabajando concurrentemente, mientras más consumidores afectará a la velocidad de envio de mensajes.
+
+Para incrementar la disponibilidad de la informacion los topics se deben replicar en multiples brokers. 
+
+![image](https://user-images.githubusercontent.com/56406481/179130927-6f4764b0-55d9-4c46-a8d9-6bc3b8edd88b.png)
+
+Como vemos aquí tenemos un cluster de tres brokers, lo que nos posibilita a tener como maximo 3 replicas de un topic. En este caso se asignan
+2 replicas de un mismo topic, generando un lider y un seguidor, si tengo 3 replicas tendré un lider y dos seguidores, asi sucesivamente. Como vemos la replica del topic es exacta incluso en la cantidad de particiones de estos. 
+
+Se dice que si una replica se encuentra totalmente actualizada, se encuentra en un estado "in-sync", si por alguna razón un lider se cae, deja de estar actualizado, otra replica seguidora podría tomar su lugar de lider. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
