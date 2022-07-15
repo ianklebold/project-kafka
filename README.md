@@ -118,6 +118,23 @@ Hasta que el productor genera el mensaje y le llega al consumidor
 
 ### Configuracion en CONSOLE CONSUMER
 
+Si detengo mi consumidor y mi productor sigue mandando mensajes 
+![image](https://user-images.githubusercontent.com/56406481/179135804-391e9af4-a621-489e-ac49-c24a43a0d729.png)
+
+Ahora si creo nuevamente un consumidor y en ese instante envio un mensaje, vamos a ver que el consumidor comienza a leer los mensajes pero a partir de los mensajes que se enviaron desde que él estuvo en linea. 
+
+![image](https://user-images.githubusercontent.com/56406481/179135989-9e45b92b-f537-4755-a391-91c7ad6f54ea.png)
+
+Se perdió de 2 mensajes
+
+```
+Solucionamos este problema, con la bandera --from-beginning
+
+sh bin/kafka-console-consumer.sh --topic ian-topic --from-beginning --bootstrap-server  localhost:9092
+```
+![image](https://user-images.githubusercontent.com/56406481/179136433-2c2af055-868d-4504-abd9-371522dd9918.png)
+
+
 
 
 
